@@ -2,7 +2,12 @@
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
-$loader = require __DIR__.'/../vendor/autoload.php';
+if (!class_exists('Composer\\Autoload\\ClassLoader', false)) {
+    $loader = require __DIR__.'/../vendor/autoload.php';
+} else {
+    $loader = new Composer\Autoload\ClassLoader();
+    $loader->register();
+}
 
 // intl
 if (!function_exists('intl_get_error_code')) {
@@ -11,6 +16,6 @@ if (!function_exists('intl_get_error_code')) {
     $loader->add('', __DIR__.'/../vendor/symfony/symfony/src/Symfony/Component/Locale/Resources/stubs');
 }
 
-AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+AnnotationRegistry::registerLoader('class_exists');
 
 return $loader;

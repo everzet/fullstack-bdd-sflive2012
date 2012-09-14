@@ -21,7 +21,7 @@ abstract class ControllerSpecification implements Specification
     function described_with($container, $doctrine, $manager, $templating, $repository)
     {
         if (!$this->object->getProphetSubject() instanceof ContainerAwareInterface) {
-            return;
+            throw new \RuntimeException('Controller must implement ContainerAwareInterface.');
         }
 
         $container->get('doctrine')->willReturn($doctrine);
@@ -90,7 +90,7 @@ class TemplateRenderMatcher implements MatcherInterface
     public function duringAction($name, array $arguments = array())
     {
         call_user_func_array(
-            array($this->controller, $name.'Action'), $arugments
+            array($this->controller, $name.'Action'), $arguments
         );
     }
 

@@ -11,13 +11,6 @@ use Behat\Behat\Context\BehatContext,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
-
 /**
  * Feature context.
  */
@@ -35,6 +28,7 @@ class FeatureContext extends BehatContext //MinkContext if you want to test web
     public function __construct(array $parameters)
     {
         $this->parameters = $parameters;
+        $this->useContext('student', new StudentContext);
     }
 
     /**
@@ -48,16 +42,5 @@ class FeatureContext extends BehatContext //MinkContext if you want to test web
         $this->kernel = $kernel;
     }
 
-//
-// Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        $container = $this->kernel->getContainer();
-//        $container->get('some_service')->doSomethingWith($argument);
-//    }
-//
+
 }

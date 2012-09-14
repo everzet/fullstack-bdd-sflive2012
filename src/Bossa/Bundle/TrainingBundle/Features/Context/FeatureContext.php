@@ -5,6 +5,7 @@ namespace Bossa\Bundle\TrainingBundle\Features\Context;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Behat\MinkExtension\Context\MinkContext;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 use Behat\Behat\Context\BehatContext,
     Behat\Behat\Exception\PendingException;
@@ -42,5 +43,17 @@ class FeatureContext extends BehatContext //MinkContext if you want to test web
         $this->kernel = $kernel;
     }
 
+    /**
+     * @BeforeScenario
+     */
+    public function clearDatabase()
+    {
+        $purger = new ORMPurger($this->getEntityManager());
+        $purger->purge();
+    }
 
+    protected function getEntityManager()
+    {
+        return $this->kernel->getContainer()->get('doctrine')->getManager();
+    }
 }

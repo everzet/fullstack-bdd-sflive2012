@@ -5,12 +5,17 @@ namespace Bossa\Bundle\TrainingBundle\Features\Context;
 use Behat\Behat\Context\BehatContext,
     Behat\Behat\Exception\PendingException;
 use Behat\MinkExtension\Context\MinkAwareInterface;
+use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Behat\Mink\Mink;
 
-class StudentContext extends BehatContext implements MinkAwareInterface
+use Symfony\Component\HttpKernel\KernelInterface;
+
+class StudentContext extends BehatContext implements MinkAwareInterface,
+                                                     KernelAwareInterface
 {
     private $mink;
     private $minkParameters;
+    private $kernel;
 
     public function setMink(Mink $mink)
     {
@@ -20,6 +25,11 @@ class StudentContext extends BehatContext implements MinkAwareInterface
     public function setMinkParameters(array $parameters)
     {
         $this->minkParameters = $parameters;
+    }
+
+    public function setKernel(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
     }
 
     /**
@@ -32,9 +42,14 @@ class StudentContext extends BehatContext implements MinkAwareInterface
     /**
      * @When /^I go to the "([^"]*)" page$/
      */
-    public function iGoToThePage($arg1)
+    public function iGoToThePage($page)
     {
-        throw new PendingException();
+        $url = $this->kernel->getContainer()->get('router')->generate(
+            str_replace(' ', '_', $page), array(), false
+        );
+
+        $this->mink->getSession()->visit($url);
+        $this->mink->assertSession()->statusCodeEquals(200);
     }
 
     /**

@@ -1,7 +1,13 @@
 bossa_bundle_training:
-    resource: "@BossaBundleTrainingBundle/Controller/"
+    resource: "@BossaTrainingBundle/Controller/"
     type:     annotation
     prefix:   /
+
+courses:
+    pattern: /
+    defaults: { _controller: BossaTrainingBundle:Courses:list }
+    requirements:
+        _method: GET
 
 # Internal routing configuration to handle ESI
 #_internal:

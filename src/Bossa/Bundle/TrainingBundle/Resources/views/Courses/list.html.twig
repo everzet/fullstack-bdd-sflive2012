@@ -1,4 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+    {% if not courses|length %}
+        No courses scheduled.
+    {% endif %}
 {% endblock body %}

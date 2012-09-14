@@ -57,7 +57,9 @@ class StudentContext extends BehatContext implements MinkAwareInterface,
      */
     public function iShouldNotSeeAnyCourses()
     {
-        throw new PendingException();
+        $this->mink->assertSession()->pageTextContains(
+            'No courses scheduled.'
+        );
     }
 
     /**

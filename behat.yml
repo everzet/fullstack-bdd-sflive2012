@@ -2,5 +2,7 @@ default:
     extensions:
         Behat\MinkExtension\Extension:
             default_session: symfony2
+            show_cmd: open %s
+            show_auto: true
         Behat\Symfony2Extension\Extension:
             bundle: @BossaTrainingBundle

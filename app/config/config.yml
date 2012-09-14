@@ -49,6 +49,13 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        mappings:
+            Bossa:
+                type:       annotation
+                is_bundle:  false
+                dir:        %kernel.root_dir%/../src/Bossa/Entity
+                prefix:     Bossa\Entity\
+                alias:      Bossa
 
 # Swiftmailer Configuration
 swiftmailer:

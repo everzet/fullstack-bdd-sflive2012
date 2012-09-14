@@ -9,9 +9,14 @@ class CoursesController extends Controller
 {
     public function listAction()
     {
+        $courses = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('Bossa:Course')
+            ->findAll();
+
         return $this->render(
             'BossaTrainingBundle:Courses:list.html.twig',
-            array('courses' => array())
+            array('courses' => $courses)
         );
     }
 }

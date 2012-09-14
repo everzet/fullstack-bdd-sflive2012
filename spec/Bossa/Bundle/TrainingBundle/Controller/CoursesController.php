@@ -19,4 +19,14 @@ class CoursesController extends \spec\ControllerSpecification
             array('courses' => array())
         )->duringAction('list');
     }
+
+    function it_should_pass_courses_from_domain_to_the_view($repository)
+    {
+        $repository->findAll()->willReturn(array('item1', 'item2'));
+
+        $this->controller->shouldRender(
+            'BossaTrainingBundle:Courses:list.html.twig',
+            array('courses' => array('item1', 'item2'))
+        )->duringAction('list');
+    }
 }
